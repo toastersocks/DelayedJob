@@ -6,7 +6,11 @@ extension DelayedJobTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__DelayedJobTests = [
+        ("testCancel", testCancel),
         ("testDoNotRunBeforeDelay", testDoNotRunBeforeDelay),
+        ("testJobsObeyLaterPriority", testJobsObeyLaterPriority),
+        ("testJobsObeySoonerPriority", testJobsObeySoonerPriority),
+        ("testRunAfterCancel", testRunAfterCancel),
         ("testRunAfterDelay", testRunAfterDelay),
     ]
 }
