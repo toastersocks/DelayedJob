@@ -10,6 +10,8 @@ import struct Foundation.Date
 import Dispatch
 
 @available(macOS 10.12, *)
+
+/// Represents a task that can be run at a later time. Ensures that a task is only run once if there is already another run of the taski pending.
 public class DelayedJob {
     
     private let job: () -> Void
@@ -24,17 +26,25 @@ public class DelayedJob {
     private let priority: SoonerOrLater
     
     
+    /// Creates a new delayed job with the specified closure and priority.
+    /// - Parameter prioritize: Sets whether tasks that are scheduled sooner are prioritized over tasks that are scheduled for later or vise-versa.
+    /// - Parameter block: The work to be done.
     public init(prioritize priority: SoonerOrLater = .later, block: @escaping () -> Void) {
         job = block
         self.priority = priority
     }
     
+    
+    /// Cancels a pending run.
     public func cancel() {
         workItem.cancel()
         workItem = DispatchWorkItem { self.job(); self.status = .idle }
         status = .idle
     }
     
+    
+    /// Schedules a run of the job.
+    /// - Parameter delay: How long to wait before running the task.
     public func run(withDelay delay: TimeInterval) {
         
         let comparator: (TimeInterval, TimeInterval) -> Bool
@@ -57,6 +67,9 @@ public class DelayedJob {
         }
     }
     
+    
+    /// Schedules a run of the job.
+    /// - Parameter delay: How long to wait before running the task.
     public func run(withDelay delay: GranularTimeInterval) {
         run(withDelay: delay.timeInterval)
     }
@@ -75,12 +88,16 @@ public class DelayedJob {
         case idle
     }
     
+    
+    /// Options for how tasks should be prioritized.
     public enum SoonerOrLater {
         case sooner
         case later
     }
 }
 
+
+/// Units for specifying units of time
 public enum GranularTimeInterval {
     
     var timeInterval: TimeInterval {
