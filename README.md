@@ -41,35 +41,36 @@ Add this repo to your `Package.swift` dependencies:
 And add `Delayed Job` as a dependency of your target
 ``` Swift
 .target(
-name: "MyTarget",
-dependencies: ["DelayedJob"]),
+    name: "MyTarget",
+    dependencies: ["DelayedJob"]),
 .testTarget(
-name: "MyTargetTests",
-dependencies: ["MyTarget"]),
-]
-)
+    name: "MyTargetTests",
+    dependencies: ["MyTarget"]),
 ```
 All together:
 ``` Swift
+// swift-tools-version:5.0
+// The swift-tools-version declares the minimum version of Swift required to build this package.
+
 import PackageDescription
 
 let package = Package(
-name: "MyThing",
-platforms: [.macOS(.v10_12), .iOS(.v10), .tvOS(.v10)], <-- for Apple platforms, add at least one platform. For non-Apple platforms, this isn't necessary. 
-dependencies: [
-// Dependencies declare other packages that this package depends on.
-.package(url: "https://github.com/toastersocks/DelayedJob", from: "1.0.0"),
-],
-targets: [
-// Targets are the basic building blocks of a package. A target can define a module or a test suite.
-// Targets can depend on other targets in this package, and on products in packages which this package depends on.
-.target(
-name: "MyTarget",
-dependencies: ["DelayedJob"]),
-.testTarget(
-name: "MyTargetTests",
-dependencies: ["TestSPM"]),
-]
+    name: "MyExecutableOrLibrary",
+    platforms: [.macOS(.v10_12), .iOS(.v10), .tvOS(.v10), .watchOS(.v3)], // <-- for Apple platforms, add at least one platform. For non-Apple platforms, this isn't necessary.
+    dependencies: [
+        // Dependencies declare other packages that this package depends on.
+        .package(url: "https://github.com/toastersocks/DelayedJob", from: "1.0.0"),
+    ],
+    targets: [
+        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
+        // Targets can depend on other targets in this package, and on products in packages which this package depends on.
+        .target(
+            name: "MyTarget",
+            dependencies: ["DelayedJob"]),
+        .testTarget(
+            name: "MyTargetTests",
+            dependencies: ["MyTarget"]),
+    ]
 )
 ```
 #### Via Xcode
