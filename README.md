@@ -84,3 +84,9 @@ If you're using Xcode 11 or higher, you can use the Swift Package Manager integr
  - Choose your targets and hit `Finish`!
  - Wow 🤯
  
+ ### Carthage
+ Add this to your `Cartfile`
+ ``` Ruby
+ github "toastersocks/DelayedJob" ~> "1.0.0"
+ ```
+ And follow the directions here: https://github.com/Carthage/Carthage#adding-frameworks-to-an-application
