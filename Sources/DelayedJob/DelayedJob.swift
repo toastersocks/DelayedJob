@@ -10,6 +10,7 @@ import struct Foundation.Date
 import Dispatch
 
 @available(macOS 10.12, *)
+@available(iOS 10, *)
 
 /// Represents a task that can be run at a later time. Ensures that a task is only run once if there is already another run of the taski pending.
 public class DelayedJob {
