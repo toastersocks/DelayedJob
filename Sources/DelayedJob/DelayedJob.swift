@@ -46,24 +46,20 @@ public class DelayedJob {
     /// - Parameter delay: How long to wait before running the task.
     public func run(withDelay delay: TimeInterval) {
         
-        let comparator: (TimeInterval, TimeInterval) -> Bool
+        let ignoreComparator: (TimeInterval, TimeInterval) -> Bool
         switch priority {
         case .sooner:
-            comparator = (<=)
+            ignoreComparator = (<=)
         case .later:
-            comparator = (>=)
+            ignoreComparator = (>=)
         }
         
-        switch status {
-        case .waiting where comparator(delay, status.timeRemaining):
+        if case .waiting = status {
+            guard ignoreComparator(delay, status.timeRemaining) else { return }
             cancel()
-            fallthrough
-        case .idle:
-            queue.asyncAfter(deadline: .now() + delay, execute: workItem)
-            status = .waiting(for: delay, since: Date())
-        default:
-            break
         }
+        queue.asyncAfter(deadline: .now() + delay, execute: workItem)
+        status = .waiting(for: delay, since: Date())
     }
     
     
