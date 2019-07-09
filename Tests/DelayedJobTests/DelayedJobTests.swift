@@ -1,8 +1,7 @@
 import XCTest
 @testable import DelayedJob
- 
-@available(macOS 10.12, *)
-@available(iOS 10, *)
+
+
 final class DelayedJobTests: XCTestCase {
     func testDoNotRunBeforeDelay() {
        let jobExpectation = expectation(description: "A job should not run before its delay.")
