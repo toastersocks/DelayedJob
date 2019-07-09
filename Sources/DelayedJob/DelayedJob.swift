@@ -105,6 +105,9 @@ public enum GranularTimeInterval {
         case .days(let value):
             multiplier = 86_400
             timeValue = value
+        case .hours(let value):
+            multiplier = 3_600
+            timeValue = value
         case .minutes(let value):
             multiplier = 60
             timeValue = value
@@ -126,6 +129,7 @@ public enum GranularTimeInterval {
     
     case weeks(Int)
     case days(Int)
+    case hours(Int)
     case minutes(Int)
     case seconds(Int)
     case milliseconds(Int)
