@@ -88,12 +88,4 @@ final class DelayedJobTests: XCTestCase {
         wait(for: [expectToRun], timeout: 2.25)
         XCTAssert(timeWaited > targetDelay && timeWaited < mediumDelay, failureMessage)
     }
-    
-    
-    /*
-    static var allTests = [
-        ("testDoNotRunBeforeDelay", testDoNotRunBeforeDelay),
-        ("testRunAfterDelay", testRunAfterDelay )
-    ]
-    */
 }
