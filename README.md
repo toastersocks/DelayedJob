@@ -91,3 +91,12 @@ If you're using Xcode 11 or higher, you can use the Swift Package Manager integr
  github "toastersocks/DelayedJob" ~> "1.0.0"
  ```
  And follow the directions here: https://github.com/Carthage/Carthage#adding-frameworks-to-an-application
+
+
+## Testing
+If you're on a non-Linux platform and want to test on Linux and/or Linux on ARM, there are two files in the `bin` folder that will run the tests via Docker.  
+To run them both, make them executable and then from the project root:
+``` bash
+./bin/*Test.sh
+```
+(The arm6 (Raspberry Pi Zero and Original Pi) tests are currently failing)
