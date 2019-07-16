@@ -1,0 +1,24 @@
+env:
+  matrix:
+    include:
+      - os: osx
+      - TEST_SDK=iphonesimulator12.1 OS=12.1 NAME='iPhone XR'
+      - TEST_SDK=iphonesimulator13 OS=13 NAME='iPhone 7'
+      - TEST_SDK=macosx10.14
+      - TEST_SDK=appletvsimulator12.2
+      - TEST_SDK=watchsimulator5.2
+      - language: swift
+      - osx_image: xcode11
+      - script:
+        - set -o pipefail && xcodebuild test -enableCodeCoverage YES -project DelayedJob.xcodeproj -scheme DelayedJob -sdk $TEST_SDK -destination "platform=iOS Simulator,OS=$OS,name=$NAME" ONLY_ACTIVE_ARCH=YES
+      - os: linux
+      - language: generic
+      - services: 
+        - docker
+        - script: 
+        - name: "Linux tests"
+        - bash bin/LinuxDockerTest.sh
+        - name: "Arm7 Linux tests"
+        - bash bin/Arm7LinuxDockerTest.sh
+        - name: "Arm6 Linux tests"
+        - bash bin/Arm6LinuxDockerTest.sh
