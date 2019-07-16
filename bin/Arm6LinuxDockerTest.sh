@@ -6,17 +6,6 @@ command -v docker >/dev/null 2>&1 || { echo >&2 "Docker not found. Docker is nee
 
 swift test --generate-linuxmain # Requires the Objective-C runtime to do anything useful. Otherwise it silently fails. If you add tests from a non-Darwin platform, you have to update the test list manually or your new tests wont be found and run.
 
-# arm7-32bit - Raspberry Pies except for Raspi Zero
-echo "Running arm7-32bit Linux tests...."
-docker run --rm \
-    --volume "$(pwd):/package" \
-    --workdir "/package" \
-    wlisac/raspberrypi3-swift:5.0.1-build \
-    /bin/bash -c \
-    "swift package resolve && swift test --build-path ./.build/linux"
-echo "Done!"
-
-
 # arm6 - Raspberry Pi Zero
 echo "Running arm6 Linux tests...."
 docker run --rm \
