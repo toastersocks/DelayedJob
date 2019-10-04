@@ -7,4 +7,3 @@ language: objective-c
 
 script:
 - set -o pipefail && xcodebuild test -enableCodeCoverage YES -project DelayedJob.xcodeproj -scheme DelayedJob-Package -sdk macosx ONLY_ACTIVE_ARCH=NO | xcpretty
-- pod lib lint
