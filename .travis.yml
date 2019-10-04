@@ -6,7 +6,7 @@ osx_image: xcode11
 language: objective-c
 
 script:
-- set -o pipefail && xcodebuild test -enableCodeCoverage YES -project DelayedJob.xcodeproj -scheme DelayedJob-Package -sdk macosx ONLY_ACTIVE_ARCH=NO | xcpretty
+- set -o pipefail && xcodebuild test -enableCodeCoverage YES -project DelayedJob.xcodeproj -scheme DelayedJob-Package -sdk macosx ONLY_ACTIVE_ARCH=NO
 
 after_success:
   - bash <(curl -s https://codecov.io/bash) -t 7c1972a0-657b-404a-b982-a17c39e5db8d
