@@ -1,6 +1,6 @@
 coverage_service: cobertura_xml
-xcodeproj: DelayedJob.xcodeproj
+xcodeproj: ./DelayedJob.xcodeproj
 scheme: DelayedJob-Package
-output_directory: reports
+output_directory: ./reports
 ignore:
-  - DelayedJobTests/*
+  - "DelayedJobTests/*"
