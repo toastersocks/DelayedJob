@@ -5,16 +5,19 @@
 //  Created by James Pamplona on 7/2/19.
 //  Copyright © 2019 James Pamplona. All rights reserved.
 
-import typealias Foundation.TimeInterval
-import struct Foundation.Date
 import Dispatch
 
+import struct Foundation.Date
+import typealias Foundation.TimeInterval
 
-/// Represents a task that can be run at a later time. Ensures that a task is only run once if there is already another run of the taski pending.
+/// Represents a task that can be run at a later time. Ensures that a task is only run once if there is already another run of the task pending.
 public class DelayedJob {
-    
+
     private let job: () -> Void
-    private lazy var workItem = DispatchWorkItem { self.job(); self.status = .idle }
+    private lazy var workItem = DispatchWorkItem {
+        self.job()
+        self.status = .idle
+    }
     private let queue = DispatchQueue(
         label: "DelayedJob",
         qos: .default,
@@ -23,8 +26,7 @@ public class DelayedJob {
         target: nil)
     private var status: Status = .idle
     private let priority: SoonerOrLater
-    
-    
+
     /// Creates a new delayed job with the specified closure and priority.
     /// - Parameter prioritize: Sets whether tasks that are scheduled sooner are prioritized over tasks that are scheduled for later or vise-versa.
     /// - Parameter block: The work to be done.
@@ -32,20 +34,21 @@ public class DelayedJob {
         job = block
         self.priority = priority
     }
-    
-    
+
     /// Cancels a pending run.
     public func cancel() {
         workItem.cancel()
-        workItem = DispatchWorkItem { self.job(); self.status = .idle }
+        workItem = DispatchWorkItem {
+            self.job()
+            self.status = .idle
+        }
         status = .idle
     }
-    
-    
+
     /// Schedules a run of the job.
     /// - Parameter delay: How long to wait before running the task.
     public func run(withDelay delay: TimeInterval) {
-        
+
         let ignoreComparator: (TimeInterval, TimeInterval) -> Bool
         switch priority {
         case .sooner:
@@ -53,7 +56,7 @@ public class DelayedJob {
         case .later:
             ignoreComparator = (>=)
         }
-        
+
         if case .waiting = status {
             guard ignoreComparator(delay, status.timeRemaining) else { return }
             cancel()
@@ -61,14 +64,13 @@ public class DelayedJob {
         queue.asyncAfter(deadline: .now() + delay, execute: workItem)
         status = .waiting(for: delay, since: Date())
     }
-    
-    
+
     /// Schedules a run of the job.
     /// - Parameter delay: How long to wait before running the task.
     public func run(withDelay delay: GranularTimeInterval) {
         run(withDelay: delay.timeInterval)
     }
-    
+
     private enum Status {
         var timeRemaining: TimeInterval {
             switch self {
@@ -78,12 +80,11 @@ public class DelayedJob {
                 return 0
             }
         }
-        
+
         case waiting(for: TimeInterval, since: Date)
         case idle
     }
-    
-    
+
     /// Options for how tasks should be prioritized.
     public enum SoonerOrLater {
         case sooner
@@ -91,10 +92,9 @@ public class DelayedJob {
     }
 }
 
-
 /// Units for specifying units of time
 public enum GranularTimeInterval {
-    
+
     var timeInterval: TimeInterval {
         let multiplier: Double
         let timeValue: Int
@@ -126,7 +126,7 @@ public enum GranularTimeInterval {
         }
         return Double(timeValue) * multiplier
     }
-    
+
     case weeks(Int)
     case days(Int)
     case hours(Int)
