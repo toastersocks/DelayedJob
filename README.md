@@ -1,4 +1,6 @@
 # DelayedJob
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Ftoastersocks%2FDelayedJob%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/toastersocks/DelayedJob)
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Ftoastersocks%2FDelayedJob%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/toastersocks/DelayedJob)
 
 Run a task at a later time. Subsequent requests to run the job while there's already one scheduled will result in either the already scheduled job to be canceled or the new run to be ignored. Whether to prioritize runs scheduled for sooner or for later can be configured.
 
@@ -17,7 +19,7 @@ func editingDidChange(sender: UITextField) {
 ```
 Using the `.later` priority, if a run is requested before the existing run has fired, the previously scheduled run is canceled and the new one is scheduled. That way the network request will only actually be run when the user stops typing for more than a second.
 
-## Instalation
+## Installation
 
 ### Cocoapods
 
