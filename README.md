@@ -17,7 +17,7 @@ func editingDidChange(sender: UITextField) {
 ```
 Using the `.later` priority, if a run is requested before the existing run has fired, the previously scheduled run is canceled and the new one is scheduled. That way the network request will only actually be run when the user stops typing for more than a second.
 
-## Instalation
+## Installation
 
 ### Cocoapods
 
