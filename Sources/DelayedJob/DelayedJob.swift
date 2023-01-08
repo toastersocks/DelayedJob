@@ -10,7 +10,7 @@ import struct Foundation.Date
 import Dispatch
 
 
-/// Represents a task that can be run at a later time. Ensures that a task is only run once if there is already another run of the taski pending.
+/// Represents a task that can be run at a later time. Ensures that a task is only run once if there is already another run of the task pending.
 public class DelayedJob {
     
     private let job: () -> Void
