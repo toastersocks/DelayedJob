@@ -5,16 +5,19 @@
 //  Created by James Pamplona on 7/2/19.
 //  Copyright © 2019 James Pamplona. All rights reserved.
 
-import typealias Foundation.TimeInterval
-import struct Foundation.Date
 import Dispatch
 
+import struct Foundation.Date
+import typealias Foundation.TimeInterval
 
 /// Represents a task that can be run at a later time. Ensures that a task is only run once if there is already another run of the task pending.
 public class DelayedJob {
 
     private let job: () -> Void
-    private lazy var workItem = DispatchWorkItem { self.job(); self.status = .idle }
+    private lazy var workItem = DispatchWorkItem {
+        self.job()
+        self.status = .idle
+    }
     private let queue = DispatchQueue(
         label: "DelayedJob",
         qos: .default,
@@ -35,7 +38,10 @@ public class DelayedJob {
     /// Cancels a pending run.
     public func cancel() {
         workItem.cancel()
-        workItem = DispatchWorkItem { self.job(); self.status = .idle }
+        workItem = DispatchWorkItem {
+            self.job()
+            self.status = .idle
+        }
         status = .idle
     }
 
